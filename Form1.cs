@@ -1,4 +1,5 @@
 ﻿using DIPActivity;
+using ImageProcess2;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -186,6 +187,36 @@ namespace ImageProcessingLecture1
                 pictureBox1.Image = null;
                 pictureBox2.Image = null;
             }
+        }
+
+        private void smoothingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            featurelabel.Text = "SMOOTHING";
+            basicDIP.Smoothing(ref loaded, ref processed, 9);
+        }
+
+        private void gaussianBlurToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            featurelabel.Text = "GAUSSIAN BLUR";
+            basicDIP.GaussianBlur(ref loaded, ref processed, 18);
+        }
+
+        private void meanRemovalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            featurelabel.Text = "MEAN REMOVAL";
+            basicDIP.MeanRemoval(ref loaded, ref processed, 8);
+        }
+
+        private void sharpenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            featurelabel.Text = "SHARPEN";
+            basicDIP.Sharpen(ref loaded, ref processed, 5);
+        }
+
+        private void embossToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            featurelabel.Text = "EMBOSS LAPLACIAN";
+            basicDIP.EmbossLaplacian(ref loaded, ref processed);
         }
 
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)

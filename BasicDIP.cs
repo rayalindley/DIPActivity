@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImageProcess2;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -162,6 +163,71 @@ namespace DIPActivity
             }
 
             pictureBox2.Image = processed;
+        }
+
+        public void Smoothing(ref Bitmap loaded, ref Bitmap processed, int weight)
+        {
+            if (!IsLoaded(loaded)) return;
+
+            processed = new Bitmap(loaded);
+            bool success = BitmapFilter.Smooth(processed, weight);
+
+            if (success)
+            {
+                pictureBox2.Image = processed;
+            }
+        }
+
+        public void GaussianBlur(ref Bitmap loaded, ref Bitmap processed, int weight)
+        {
+            if(!IsLoaded(loaded)) return;
+
+            processed = new Bitmap(loaded);
+            bool success = BitmapFilter.GaussianBlur(processed, weight);
+
+            if (success)
+            {
+                pictureBox2.Image = processed;
+            }
+        }
+
+        public void MeanRemoval(ref Bitmap loaded, ref Bitmap processed, int weight)
+        {
+            if (!IsLoaded(loaded)) return;
+
+            processed = new Bitmap(loaded);
+            bool success = BitmapFilter.MeanRemoval(processed, weight);
+
+            if (success)
+            {
+                pictureBox2.Image = processed;
+            }
+        }
+
+        public void Sharpen(ref Bitmap loaded, ref Bitmap processed, int weight)
+        {
+            if (!IsLoaded(loaded)) return;
+
+            processed = new Bitmap(loaded);
+            bool success = BitmapFilter.Sharpen(processed, weight);
+
+            if (success)
+            {
+                pictureBox2.Image = processed;
+            }
+        }
+
+        public void EmbossLaplacian(ref Bitmap loaded, ref Bitmap processed)
+        {
+            if (!IsLoaded(loaded)) return;
+
+            processed = new Bitmap(loaded);
+            bool success = BitmapFilter.EmbossLaplacian(processed);
+
+            if (success)
+            {
+                pictureBox2.Image = processed;
+            }
         }
     }
 }

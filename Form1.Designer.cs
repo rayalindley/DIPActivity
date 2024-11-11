@@ -50,6 +50,12 @@
             this.featurelabel = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.deleteImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.convolutionMatrixToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.smoothingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gaussianBlurToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sharpenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.embossToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.meanRemovalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -133,7 +139,8 @@
             this.inversionToolStripMenuItem,
             this.histogramToolStripMenuItem,
             this.sepiaToolStripMenuItem,
-            this.subtractToolStripMenuItem});
+            this.subtractToolStripMenuItem,
+            this.convolutionMatrixToolStripMenuItem});
             this.dIPToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dIPToolStripMenuItem.Name = "dIPToolStripMenuItem";
             this.dIPToolStripMenuItem.Size = new System.Drawing.Size(48, 24);
@@ -249,6 +256,55 @@
             this.deleteImageToolStripMenuItem.Text = "Delete Image";
             this.deleteImageToolStripMenuItem.Click += new System.EventHandler(this.deleteImageToolStripMenuItem_Click);
             // 
+            // convolutionMatrixToolStripMenuItem
+            // 
+            this.convolutionMatrixToolStripMenuItem.BackColor = System.Drawing.Color.Black;
+            this.convolutionMatrixToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.smoothingToolStripMenuItem,
+            this.gaussianBlurToolStripMenuItem,
+            this.meanRemovalToolStripMenuItem,
+            this.sharpenToolStripMenuItem,
+            this.embossToolStripMenuItem});
+            this.convolutionMatrixToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.convolutionMatrixToolStripMenuItem.Name = "convolutionMatrixToolStripMenuItem";
+            this.convolutionMatrixToolStripMenuItem.Size = new System.Drawing.Size(227, 26);
+            this.convolutionMatrixToolStripMenuItem.Text = "Convolution Matrix";
+            // 
+            // smoothingToolStripMenuItem
+            // 
+            this.smoothingToolStripMenuItem.Name = "smoothingToolStripMenuItem";
+            this.smoothingToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.smoothingToolStripMenuItem.Text = "Smoothing";
+            this.smoothingToolStripMenuItem.Click += new System.EventHandler(this.smoothingToolStripMenuItem_Click);
+            // 
+            // gaussianBlurToolStripMenuItem
+            // 
+            this.gaussianBlurToolStripMenuItem.Name = "gaussianBlurToolStripMenuItem";
+            this.gaussianBlurToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.gaussianBlurToolStripMenuItem.Text = "Gaussian Blur";
+            this.gaussianBlurToolStripMenuItem.Click += new System.EventHandler(this.gaussianBlurToolStripMenuItem_Click);
+            // 
+            // sharpenToolStripMenuItem
+            // 
+            this.sharpenToolStripMenuItem.Name = "sharpenToolStripMenuItem";
+            this.sharpenToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.sharpenToolStripMenuItem.Text = "Sharpen";
+            this.sharpenToolStripMenuItem.Click += new System.EventHandler(this.sharpenToolStripMenuItem_Click);
+            // 
+            // embossToolStripMenuItem
+            // 
+            this.embossToolStripMenuItem.Name = "embossToolStripMenuItem";
+            this.embossToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.embossToolStripMenuItem.Text = "Emboss Laplacian";
+            this.embossToolStripMenuItem.Click += new System.EventHandler(this.embossToolStripMenuItem_Click);
+            // 
+            // meanRemovalToolStripMenuItem
+            // 
+            this.meanRemovalToolStripMenuItem.Name = "meanRemovalToolStripMenuItem";
+            this.meanRemovalToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.meanRemovalToolStripMenuItem.Text = "Mean Removal";
+            this.meanRemovalToolStripMenuItem.Click += new System.EventHandler(this.meanRemovalToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -296,6 +352,12 @@
         private System.Windows.Forms.ToolStripMenuItem turnOffToolStripMenuItem1;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ToolStripMenuItem deleteImageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem convolutionMatrixToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem smoothingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem gaussianBlurToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sharpenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem embossToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem meanRemovalToolStripMenuItem;
     }
 }
 
