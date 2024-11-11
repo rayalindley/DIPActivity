@@ -56,13 +56,13 @@ namespace ImageProcessingLecture1
         {
             resultImg = new Bitmap(imageB.Width, imageB.Height);
 
-            Color mygreen = Color.FromArgb(0, 0, 255);
-            int greygreen = (mygreen.R + mygreen.G + mygreen.B)/3;
+            Color mygreen = Color.FromArgb(0, 255, 0);
+            int greygreen = (mygreen.R + mygreen.G + mygreen.B) / 3;
             int threshold = 5;
 
-            for(int x=0; x<imageB.Width; x++)
+            for (int x = 0; x < imageB.Width; x++)
             {
-                for(int y=0; y<imageB.Height; y++)
+                for (int y = 0; y < imageB.Height; y++)
                 {
                     Color pixel = imageB.GetPixel(x, y);
                     Color backpixel = imageA.GetPixel(x, y);
@@ -70,7 +70,7 @@ namespace ImageProcessingLecture1
                     int grey = (pixel.R + pixel.G + pixel.B) / 3;
                     int subtractval = Math.Abs(grey - greygreen);
 
-                    if(subtractval > threshold )
+                    if (subtractval > threshold)
                         resultImg.SetPixel(x, y, backpixel);
                     else
                         resultImg.SetPixel(x, y, pixel);

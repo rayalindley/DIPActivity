@@ -1,50 +1,84 @@
-﻿using System;
+﻿using DIPActivity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WebCamLib;
 
 namespace ImageProcessingLecture1
 {
     public partial class Form1 : Form
     {
         Bitmap loaded, processed;
+        Device[] devices;
+        BasicDIP basicDIP;
+
         public Form1()
         {
             InitializeComponent();
+            basicDIP = new BasicDIP(pictureBox1, pictureBox2);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             featurelabel.Text = "DIGITAL IMAGER PROCESSING";
             featurelabel.Size = new Size(100, 50);
+
+            devices = DeviceManager.GetAllDevices();
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (timer1.Enabled)
+            {
+                devices[0].Stop();
+                timer1.Enabled = false;
+            }
+
             openFileDialog1.ShowDialog();
         }
 
         private void pixelCopyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             featurelabel.Text = "BASIC COPY";
-            processed = new Bitmap(loaded.Width, loaded.Height);
-            Color pixel;
+            basicDIP.BasicCopy(ref loaded, ref processed);
+        }
 
-            for(int x=0;x<loaded.Width; x++)
-            {
-                for(int y=0;y<loaded.Height; y++)
-                {
-                    pixel = loaded.GetPixel(x,y);
-                    processed.SetPixel(x,y,pixel);
-                }
-            }
+        private void greyscalingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            featurelabel.Text = "GREYSCALE";
+            basicDIP.GreyScale(ref loaded, ref processed);
+        }
 
-            pictureBox2.Image = processed;
+        private void inversionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            featurelabel.Text = "COLOR INVERSION";
+            basicDIP.ColorInversion(ref loaded, ref processed);
+        }
+
+        private void histogramToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            featurelabel.Text = "HISTOGRAM";
+            basicDIP.Histogram(ref loaded, ref processed);
+        }
+
+        private void sepiaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            featurelabel.Text = "SEPIA";
+            basicDIP.Sepia(ref loaded, ref processed);
+        }
+
+        private void subtractToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            subtractForm subtractForm = new subtractForm();
+            subtractForm.ShowDialog();
+
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -57,33 +91,7 @@ namespace ImageProcessingLecture1
             processed.Save(saveFileDialog1.FileName);
         }
 
-        private void greyscalingToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            featurelabel.Text = "GREYSCALE";
-            processed = new Bitmap(loaded.Width, loaded.Height);
-            Color pixel;
-            int avg;
-
-            for(int x=0; x<loaded.Width; x++)
-            {
-                for(int y=0; y<loaded.Height; y++)
-                {
-                    pixel = loaded.GetPixel(x,y);
-                    avg = (int)(pixel.R+pixel.G+pixel.B)/3;
-                    Color grey = Color.FromArgb(avg, avg, avg);
-                    processed.SetPixel(x,y,grey);
-                }
-            }
-
-            pictureBox2.Image = processed;
-        }
-
-        private void histogramToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            featurelabel.Text = "HISTOGRAM";
-            BasicDIP.Histogram(ref loaded, ref processed);
-            pictureBox2.Image = processed;
-        }
+        
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
@@ -95,53 +103,89 @@ namespace ImageProcessingLecture1
 
         }
 
-        private void inversionToolStripMenuItem_Click(object sender, EventArgs e)
+        private void takeAPhotoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            featurelabel.Text = "COLOR INVERSION";
 
-            processed = new Bitmap(loaded.Width, loaded.Height);
-            Color pixel;;
-
-            for (int x = 0; x < loaded.Width; x++)
-            {
-                for (int y = 0; y < loaded.Height; y++)
-                {
-                    pixel = loaded.GetPixel(x, y);
-                    Color inverted = Color.FromArgb(255-pixel.R, 255-pixel.G, 255-pixel.B);
-                    processed.SetPixel(x, y, inverted);
-                }
-            }
-
-            pictureBox2.Image = processed;
         }
 
-        private void sepiaToolStripMenuItem_Click(object sender, EventArgs e)
+        private void turnOnToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            featurelabel.Text = "SEPIA";
-            processed = new Bitmap(loaded.Width, loaded.Height);
-
-            for (int x=0; x<loaded.Width; x++)
+            if (openFileDialog1.FileName != "")
             {
-                for (int y=0; y<loaded.Height; y++)
-                {
-                    Color pixel = loaded.GetPixel(x, y);
-
-                    int sepiaR = Math.Min(255, (int)(0.393 * pixel.R + 0.769 * pixel.G + 0.189 * pixel.B));
-                    int sepiaG = Math.Min(255, (int)(0.349 * pixel.R + 0.686 * pixel.G + 0.168 * pixel.B));
-                    int sepiaB = Math.Min(255, (int)(0.272 * pixel.R + 0.534 * pixel.G + 0.131 * pixel.B));
-
-                    processed.SetPixel(x, y, Color.FromArgb(sepiaR, sepiaG, sepiaB));
-                }
+                openFileDialog1.FileName = "";
+                pictureBox1.Image = null;
             }
 
-            pictureBox2.Image = processed;
+            devices[0].ShowWindow(pictureBox1);
+            timer1.Enabled = true;
         }
 
-        private void subtractToolStripMenuItem_Click(object sender, EventArgs e)
+        private void turnOffToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            subtractForm subtractForm = new subtractForm();
-            subtractForm.ShowDialog();
-            
+            devices[0].Stop();
+            timer1.Enabled=false;
+        }
+
+        private void openCameraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void turnOnToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.FileName != "")
+            {
+                openFileDialog1.FileName = "";
+                pictureBox1.Image = null;
+                pictureBox2.Image = null;
+            }
+
+            featurelabel.Text = "DIGITAL IMAGER PROCESSING";
+            devices[0].ShowWindow(pictureBox1);
+            timer1.Enabled = true;
+        }
+
+        private void turnOffToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            devices[0].Stop();
+            timer1.Enabled = false;
+            featurelabel.Text = "DIGITAL IMAGER PROCESSING";
+        }
+
+        private void videoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void greyscaleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            timer1.Enabled = true;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            IDataObject data;
+            Image bmap;
+
+            devices[0].Sendmessage();
+            data = Clipboard.GetDataObject();
+
+            bmap = (Image)(data.GetData("System.Drawing.Bitmap", true));
+
+            if (bmap != null)
+            {
+                Bitmap b = new Bitmap(bmap);
+                loaded = b;
+            }
+        }
+
+        private void deleteImageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(pictureBox1.Image!=null || pictureBox2.Image!=null)
+            {
+                pictureBox1.Image = null;
+                pictureBox2.Image = null;
+            }
         }
 
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
