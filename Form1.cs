@@ -219,6 +219,52 @@ namespace ImageProcessingLecture1
             basicDIP.EmbossLaplacian(ref loaded, ref processed);
         }
 
+        private void quickToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            featurelabel.Text = "EDGE DETECT QUICK";
+            basicDIP.EmbossLaplacian(ref loaded, ref processed);
+        }
+
+        private void horizaontalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            featurelabel.Text = "EMBOSS HORIZONTAL";
+            processed = new Bitmap(loaded);
+            basicDIP.Emboss(processed, BasicDIP.EMBOSS.HORIZONTAL_ONLY);
+            pictureBox2.Image = processed;
+        }
+
+        private void horizontalVerticaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            featurelabel.Text = "EMBOSS ALL DIRECTIONS";
+            processed = new Bitmap(loaded);
+            basicDIP.Emboss(processed, BasicDIP.EMBOSS.ALL_DIRECTIONS);
+            pictureBox2.Image = processed;
+        }
+
+        private void lossyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            featurelabel.Text = "EMBOSS LOSSY";
+            processed = new Bitmap(loaded);
+            basicDIP.Emboss(processed, BasicDIP.EMBOSS.LOSSY);
+            pictureBox2.Image = processed;
+        }
+
+        private void horizontalVerticalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            featurelabel.Text = "EMBOSS HORIZONTAL & VERTICAL";
+            processed = new Bitmap(loaded);
+            basicDIP.Emboss(processed, BasicDIP.EMBOSS.HORIZONTAL_VERTICAL);
+            pictureBox2.Image = processed;
+        }
+
+        private void verticalToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            featurelabel.Text = "EMBOSS VERTICAL";
+            processed = new Bitmap(loaded);
+            basicDIP.Emboss(processed, BasicDIP.EMBOSS.VERTICAL_ONLY);
+            pictureBox2.Image = processed;
+        }
+
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
             loaded = new Bitmap(openFileDialog1.FileName);

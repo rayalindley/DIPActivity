@@ -1,6 +1,7 @@
 ﻿using ImageProcess2;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -228,6 +229,48 @@ namespace DIPActivity
             {
                 pictureBox2.Image = processed;
             }
+        }
+
+        public enum EMBOSS { HORIZONTAL_VERTICAL, ALL_DIRECTIONS, LOSSY, HORIZONTAL_ONLY, VERTICAL_ONLY };
+        
+        public bool Emboss(Bitmap b, EMBOSS nType)
+        {
+            ConvMatrix m = new ConvMatrix();
+
+            switch (nType)
+            {
+                case EMBOSS.HORIZONTAL_VERTICAL:
+                    m.SetAll(0);
+                    m.TopMid = m.MidLeft = m.MidRight = m.BottomMid = -1;
+                    m.Pixel = 4;
+                    m.Offset = 127;
+                    break;
+                case EMBOSS.ALL_DIRECTIONS:
+                    m.SetAll(-1);
+                    m.Pixel = 8;
+                    m.Offset = 127;
+                    break;
+                case EMBOSS.LOSSY:
+                    m.SetAll(-2);
+                    m.TopLeft = m.TopRight = m.BottomMid = 1;
+                    m.Pixel = 4;
+                    m.Offset = 127;
+                    break;
+                case EMBOSS.HORIZONTAL_ONLY:
+                    m.SetAll(0);
+                    m.MidLeft = m.MidRight = -1;
+                    m.Pixel = 2;
+                    m.Offset = 127;
+                    break;
+                case EMBOSS.VERTICAL_ONLY:
+                    m.SetAll(0);
+                    m.TopMid = -1;
+                    m.BottomMid = 1;
+                    m.Offset = 127;
+                    break;
+            }
+
+            return BitmapFilter.Conv3x3(b, m);
         }
     }
 }
